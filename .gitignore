@@ -1,0 +1,6 @@
+node_modules
+.data
+*.exe
+.build
+dist
+.dist
