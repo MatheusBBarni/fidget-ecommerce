@@ -19,13 +19,13 @@
     </div>
 
     <div class="mb-3">
-        <label for="cardholder-name" class="form-label">Cardholder name</label>
-        <input type="text" class="form-control" id="cardholder-name" name="cardholder-name" required="" autocomplete="cardholder-name-new" />
+        <label for="cardholder_name" class="form-label">Cardholder name</label>
+        <input type="text" class="form-control" id="cardholder_name" name="cardholder_name" required="" autocomplete="cardholder_name-new" />
     </div>
 
     <div class="mb-3">
-        <label for="cardholder-email" class="form-label">Cardholder email</label>
-        <input type="email" class="form-control" id="cardholder-email" name="cardholder-email" required="" autocomplete="cardholder-email-new" />
+        <label for="cardholder_email" class="form-label">Cardholder email</label>
+        <input type="email" class="form-control" id="cardholder_email" name="cardholder_email" required="" autocomplete="cardholder_email-new" />
     </div>
 
     <div class="mb-3">
@@ -58,7 +58,7 @@
 
     <script>
     let card
-    let stripe = Stripe('pk_test_51LmPH9IUDEmPYYbAHKEtyAjX7qQk9C3blqSyLGCTSq7wGNp5sRC9rRt4x9efENZ5mLOiBPAIWqdbHQCuA7U8awK800nOspG953')
+    let stripe = Stripe('{{index . StringMap "stripe_pk"}}')
     const cardMessages = document.querySelector("#card-messages")
     const payButton = document.querySelector("#pay-button")
     const processing = document.querySelector("#processing-payment")
@@ -92,7 +92,7 @@
             return
         }
 
-        form.classList.remove('was-validated')
+        form.classList.add('was-validated')
 
         controlPayButton(true)
 
@@ -112,7 +112,7 @@
             body: JSON.stringify(payload),
         }
 
-        fetch('http://localhost:4001/api/payment-intent', requestOptions)
+        fetch('{{.API}}/api/payment-intent', requestOptions)
             .then(response => response.text())
             .then(response => {
                 let data
@@ -124,7 +124,7 @@
                         payment_method: {
                             card: card,
                             billing_details: {
-                                name: document.querySelector('#cardholder-name').value,
+                                name: document.querySelector('#cardholder_name').value,
                             },
                         },
                     })
@@ -144,6 +144,8 @@
                                 processing.classList.add('d-none')
                                 
                                 showCardSuccess()
+
+                                document.querySelector("#charge-form").submit()
 
                                 return
                             }
