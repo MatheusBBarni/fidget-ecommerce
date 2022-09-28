@@ -2,7 +2,7 @@ STRIPE_SECRET=sk_test_51LmPH9IUDEmPYYbAH89xrjPj9zEptMHFeSi3a9L9gMMsdeEp8uAU4lYf9
 STRIPE_KEY=pk_test_51LmPH9IUDEmPYYbAHKEtyAjX7qQk9C3blqSyLGCTSq7wGNp5sRC9rRt4x9efENZ5mLOiBPAIWqdbHQCuA7U8awK800nOspG953
 WEB_PORT=4000
 API_PORT=4001
-DSN=root@tcp(localhost:3306)/fidget-ecomm?parseTime=true&tls=false
+DSN=root:root@tcp(localhost:3306)/fidget-ecomm?parseTime=true&tls=false
 
 ## build: builds all binaries
 build: clean build_front build_back

@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/MatheusBBarni/fidget-ecommerce/internal/driver"
 )
 
 const version = "1.0.0"
@@ -60,6 +62,15 @@ func main() {
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	errorLog := log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
+	conn, err := driver.OpenDB(config.db.dsn)
+
+	if err != nil {
+		errorLog.Fatal(err)
+		return
+	}
+
+	defer conn.Close()
+
 	app := &application{
 		config:   config,
 		infoLog:  infoLog,
@@ -67,7 +78,7 @@ func main() {
 		version:  version,
 	}
 
-	err := app.serve()
+	err = app.serve()
 
 	if err != nil {
 		app.errorLog.Print(err)
