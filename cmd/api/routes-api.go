@@ -20,6 +20,7 @@ func (app *application) routes() http.Handler {
 
 	mux.Route("/api", func(r chi.Router) {
 		r.Post("/payment-intent", app.GetPaymentIntent)
+		r.Get("/widget/{id}", app.GetWidgetById)
 	})
 
 	return mux

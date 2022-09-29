@@ -1,10 +1,11 @@
 {{template "base" .}}
 
 {{define "title"}}
-  Buy one widget
+    Buy one widget
 {{end}}
 
 {{define "content"}}
+{{$widget := index .Data "widget"}}
 
 <h2 class="mt-3 text-center">Buy one Widget</h2>
 <hr />
@@ -14,10 +15,12 @@
 <div class="alert alert-danger text-center d-none" id="card-messages"></div>
 
 <form action="/payment-succeeded" method="post" name="charge-form" id="charge-form" class="d-block needs-validation charge-form" autocomplete="off" novalidate="">
-    <div class="mb-3">
-        <label for="amount" class="form-label">Amount</label>
-        <input type="text" class="form-control" id="amount" name="amount" required="" autocomplete="amount-new" />
-    </div>
+    <input type="hidden" name="product_id" value="{{$widget.ID}}" />
+    <input type="hidden" id="amount" name="amount" value="{{$widget.Price}}" />
+
+    <h3 class="mt-2 mb-1 text-center">{{$widget.Name}}: {{formatCurrency $widget.Price}}</h3>
+    <p class="text-center mb-2">{{$widget.Description}}</p>
+    <hr />
 
     <div class="mb-3">
         <label for="cardholder_name" class="form-label">Cardholder name</label>

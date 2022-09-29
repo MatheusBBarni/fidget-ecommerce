@@ -7,11 +7,11 @@ tmp_dir = "tmp"
 
 [build]
 # Just plain old shell command. You could use `make` as well.
-cmd = "go build -o ./tmp/main ./cmd/web/"
+cmd = "go build -o ./tmp/web ./cmd/web/"
 # Binary file yields from `cmd`.
-bin = "tmp/main"
+bin = "tmp/web"
 # Customize binary, can setup environment variables when run your app.
-full_bin = "APP_ENV=dev APP_USER=air ./tmp/main"
+full_bin = "APP_ENV=dev APP_USER=air ./tmp/web"
 # Watch these filename extensions.
 include_ext = ["go", "tpl", "tmpl", "html", "gohtml"]
 # Ignore these filename extensions or directories.
@@ -37,7 +37,7 @@ send_interrupt = false
 # Delay after sending Interrupt signal
 kill_delay = 500 # ms
 # Add additional arguments when running binary (bin/full_bin). Will run './tmp/main hello world'.
-args_bin = ["hello", "world"]
+args_bin = []
 
 [log]
 # Show log time

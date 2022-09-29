@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/MatheusBBarni/fidget-ecommerce/internal/cards"
+	"github.com/go-chi/chi/v5"
 )
 
 type stripePayload struct {
@@ -75,6 +76,28 @@ func (app *application) GetPaymentIntent(w http.ResponseWriter, r *http.Request)
 
 	if err != nil {
 		app.errorLog.Println(err)
+	}
+
+	w.Header().Set("Content-type", "application/json")
+	w.Write(out)
+}
+
+func (app *application) GetWidgetById(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	widgetId, _ := strconv.Atoi(id)
+
+	widget, err := app.DB.GetWidget(widgetId)
+
+	if err != nil {
+		app.errorLog.Println(err)
+		return
+	}
+
+	out, err := json.MarshalIndent(widget, "", "  ")
+
+	if err != nil {
+		app.errorLog.Println(err)
+		return
 	}
 
 	w.Header().Set("Content-type", "application/json")
